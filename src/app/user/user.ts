@@ -1,21 +1,22 @@
 import { Component,computed,EventEmitter,Input,Output,signal } from '@angular/core';
 import { required } from '@angular/forms/signals';
-
+import { type UserModel } from './user.model';
+import { Card } from "../shared/card/card";
 @Component({
   selector: 'app-user',
-  imports: [],
+  imports: [Card],
   templateUrl: './user.html',
   styleUrl: './user.css',
 })
 export class User {
-  @Input({required:true}) id!:string;
-  @Input({required:true}) avatar!:string;
-  @Input({required:true}) name!:string;
-  @Output() select=new EventEmitter();
+  @Input({required:true}) user!:UserModel;
+  @Input({required:true}) selected!:boolean;
+  @Output() select=new EventEmitter<string>();
+
   get imagePath(){
-    return 'assets/users/'+this.avatar;
+    return 'assets/users/'+this.user.avatar;
   }
   onSelectUser() {
-    this.select.emit(this.id);
+    this.select.emit(this.user.id);
   }
 }

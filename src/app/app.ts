@@ -3,16 +3,24 @@ import { RouterOutlet } from '@angular/router';
 import { Header } from "./header/header";
 import { User } from "./user/user";
 import { DUMMY_USERS } from './dummy-users';
+import { Tasks } from "./tasks/tasks";
+import { Task } from './tasks/task/task';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, User],
+  imports: [RouterOutlet, Header, User, Tasks,Task],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   protected readonly title = signal('first-angular-app');
   users=DUMMY_USERS;
+  selectedUserId?:string;
+  get selectedUser(){
+    return this.users.find((user)=>
+      user.id===this.selectedUserId
+    )!;
+  }
   onSelectUser(id: string){
-    console.log('Selected user with id'+ id);
+    this.selectedUserId=id;
   }
 }
